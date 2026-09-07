@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  become: true
+
+  vars:
+    useradd_pass_hash: "{{ 'carxpass' | password_hash('sha512') }}"
+
+  tasks:
+    - name: Test useradd
+      ansible.builtin.include_role:
+        name: useradd
