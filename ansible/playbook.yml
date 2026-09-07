@@ -1,0 +1,6 @@
+---
+- name: Hosts setup
+  hosts: all
+  gather_facts: true
+  roles:
+    - upgrade_packages

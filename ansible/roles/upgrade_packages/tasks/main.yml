@@ -1,0 +1,15 @@
+---
+- name: Update apt packages (Debian/Ubuntu)
+  ansible.builtin.apt:
+    update_cache: "{{ upgrade_packages_update_cache }}"
+    upgrade: "{{ upgrade_packages_mode }}"
+    cache_valid_time: "{{ upgrade_packages_cache_valid_time }}"
+  when: ansible_os_family == "Debian"
+
+- name: Update dnf packages (Redhat-based)
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: "{{ upgrade_packages_update_cache }}"
+    update_only: "{{ upgrade_packages_update_only }}"
+  when: ansible_os_family == "RedHat"
