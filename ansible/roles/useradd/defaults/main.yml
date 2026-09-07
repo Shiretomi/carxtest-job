@@ -1,0 +1,4 @@
+---
+useradd_user: carxadmin
+# user_pass_hash — обязателен, задаётся в group_vars/vault.yml на уровне inventory
+# defaults намеренно не содержит значение, т.к. это секрет

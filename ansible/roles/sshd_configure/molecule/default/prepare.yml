@@ -1,0 +1,17 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  tasks:
+    - name: Install openssh-server (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: openssh-server
+        state: present
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install openssh-server (RedHat/Rocky)
+      ansible.builtin.dnf:
+        name: openssh-server
+        state: present
+      when: ansible_os_family == "RedHat"

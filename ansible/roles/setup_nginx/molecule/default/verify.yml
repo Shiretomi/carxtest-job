@@ -1,0 +1,29 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Load vars to verify
+      ansible.builtin.include_vars:
+        file: ../../vars/main.yml
+
+    - name: Check if nginx package is installed
+      ansible.builtin.package:
+        name: nginx
+        state: present
+      check_mode: true
+      register: setup_nginx_check
+      failed_when: setup_nginx_check is changed
+
+    - name: Verify that nginx service is enabled and running
+      ansible.builtin.service:
+        name: nginx
+        enabled: true
+        state: started
+
+    - name: Verify nginx returns custom page
+      ansible.builtin.uri:
+        url: "http://localhost/"
+        return_content: true
+      register: setup_nginx_response
+      failed_when: setup_nginx_h1_html_text not in setup_nginx_response.content

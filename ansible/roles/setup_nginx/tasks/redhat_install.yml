@@ -1,0 +1,33 @@
+---
+- name: Install yum-utils
+  ansible.builtin.yum:
+    name: yum-utils
+    state: present
+
+- name: Add Nginx GPG key
+  ansible.builtin.rpm_key:
+    key: "{{ setup_nginx_key_url }}"
+    state: present
+
+- name: Add nginx repo (stable)
+  ansible.builtin.yum_repository:
+    name: nginx-stable
+    description: nginx stable repo
+    baseurl: https://nginx.org/packages/centos/$releasever/$basearch/
+    gpgcheck: true
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    enabled: true
+
+- name: Add nginx repo (mainline)
+  ansible.builtin.yum_repository:
+    name: nginx-mainline
+    description: nginx mainline repo
+    baseurl: https://nginx.org/packages/mainline/centos/$releasever/$basearch/
+    gpgcheck: true
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    enabled: false
+
+- name: Install nginx
+  ansible.builtin.yum:
+    name: nginx
+    state: present

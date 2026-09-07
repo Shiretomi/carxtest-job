@@ -1,0 +1,2 @@
+---
+setup_nginx_webroot: /usr/share/nginx/html

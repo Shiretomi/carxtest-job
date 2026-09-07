@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Test sshd configuring role
+      ansible.builtin.include_role:
+        name: sshd_configure
