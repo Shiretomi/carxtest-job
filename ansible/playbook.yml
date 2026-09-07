@@ -2,6 +2,8 @@
 - name: Hosts setup
   hosts: all
   gather_facts: true
+  become: true
+
   roles:
     - upgrade_packages
     - setup_nginx
