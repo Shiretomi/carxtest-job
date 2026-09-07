@@ -1,2 +1,2 @@
 ---
-setup_nginx_webroot: /var/www/html
+setup_nginx_webroot: /usr/share/nginx/html
