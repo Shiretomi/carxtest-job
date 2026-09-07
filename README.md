@@ -17,3 +17,9 @@
 
 ### Роли
 Для каждой роли собраны **molecule** тесты под **rocky9** и **ubuntu22** образы через **docker**, все роли могут быть использованы на *Ubuntu* и *RHEL-like* системах
+
+
+## Docker
+
+### [Webapp](microservices/webapp-helloworld/)
+**Nodejs** приложение, обернутое в **Docker**
