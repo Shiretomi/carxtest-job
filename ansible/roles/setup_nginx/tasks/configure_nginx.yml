@@ -22,5 +22,5 @@
 - name: Add index.html at default VH
   ansible.builtin.template:
     src: index.html.j2
-    dest: /usr/share/nginx/html/index.html
+    dest: "{{ setup_nginx_webroot }}/index.html"
     mode: "0644"
