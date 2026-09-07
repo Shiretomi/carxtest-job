@@ -6,3 +6,4 @@
     - upgrade_packages
     - setup_nginx
     - useradd
+    - sshd_configure
