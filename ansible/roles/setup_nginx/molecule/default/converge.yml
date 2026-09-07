@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Test nginx setup
+      ansible.builtin.include_role:
+        name: setup_nginx

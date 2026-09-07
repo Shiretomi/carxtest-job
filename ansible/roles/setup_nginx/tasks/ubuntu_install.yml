@@ -1,0 +1,25 @@
+---
+- name: Install dependencies (and update cache)
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - curl
+      - gnupg2
+      - ca-certificates
+      - lsb-release
+      - ubuntu-keyring
+    state: present
+
+- name: Add Nginx GPG key
+  ansible.builtin.apt_key:
+    url: "{{ setup_nginx_key_url }}"
+    state: present
+
+- name: Add nginx repo
+  ansible.builtin.apt_repository:
+    repo: "deb https://nginx.org/packages/ubuntu {{ ansible_facts['distribution_release'] }} nginx"
+
+- name: Install nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
