@@ -33,4 +33,4 @@ jobs:
           context: ./microservices/webapp-helloworld
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/webapp:${{ inputs.version }}
+            ghcr.io/shiretomi/webapp:${{ inputs.version }}
