@@ -1,5 +1,10 @@
 server {
     listen 80;
+    
+    location /healthz {
+        access_log off;
+        return 200 "ok\n";
+    }
 
     location / {
         proxy_pass http://${APP_SERVICE_HOST}:${APP_SERVICE_PORT};
