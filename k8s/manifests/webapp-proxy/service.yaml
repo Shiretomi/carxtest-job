@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-proxy-svc
+  namespace: webapp-ns
+spec:
+  type: NodePort
+  selector:
+    app: webapp-proxy
+  ports:
+    - port: 80
+      targetPort: 80
