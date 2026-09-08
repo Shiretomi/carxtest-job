@@ -14,7 +14,7 @@ spec:
         app: webapp
     spec:
       containers:
-      - image: ghcr.io/shiretomi/webapp:v1.0.0
+      - image: ghcr.io/shiretomi/webapp:v1.0.1
         name: webapp
 
         ports:
