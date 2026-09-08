@@ -2,18 +2,30 @@
 
 ### Тестовое задание на позицию DevOps-Инженера
 
+```
+carxtest-job/
+├── ansible/           # плейбук, роли, инвентарь
+├── microservices/
+│   ├── webapp-helloworld/
+│   └── webapp-proxy/
+├── k8s/manifests/
+└── .github/workflows/
+```
+
 ## Ansible
+
+### [Ansible directory](ansible/)
 
 Плейбук лежит по пути `ansible/playbook.yml`
 
 В данном плейбуке подключены роли, разделенные на логические этапы
-К каждой роли приложен README файлик
+К каждой роли приложен README-файл
 
-Файл инвенторя лежит по пути `ansible/inventory/dev/hosts.yaml`
+Файл инвентаря лежит по пути `ansible/inventory/dev/hosts.yaml`
 
 Пароль для создания пользователя через роль `useradd` заранее захэширован и лежит в зашифрованном vault, предусмотрен запуск через CI
 
-Для локального запуска пароль от vault.yml направил через почту в ответном письмо
+Для локального запуска пароль от vault.yml направил через почту в ответном письме
 
 ### Роли
 Для каждой роли собраны **molecule** тесты под **rocky9** и **ubuntu22** образы через **docker**, все роли могут быть использованы на *Ubuntu* и *RHEL-like* системах
@@ -24,6 +36,12 @@
 ### [Webapp](microservices/webapp-helloworld/)
 **Nodejs** приложение, обернутое в **Docker**
 
+### [Webapp-proxy](microservices/webapp-proxy/)
+**nginx**, слегка модифицирован конфиг
+
+Также собран простенький **CI** для ручного запуска сборки и пуша в `ghcr.io` *(v1.0.0 стабильная для обоих образов)*
+
+Можно самому собрать образы и закинуть в локальный registry, либо же использовать готовые артефакты из репозитория
 
 ## K8s
 
@@ -34,6 +52,19 @@
 
 **webapp-proxy** запускается в одном экземпляре.
 
-**webapp-proxy** сервис с типом NodePort, сам он принимает трафик и отсылает его на сервис **webapp-svc**
+**webapp-proxy** сервис с типом NodePort *(в манифесте порт зафиксирован: 30792)*, сам он принимает трафик и отсылает его на сервис **webapp-svc**
+
+Для локального запуска использовался minikube:
+```
+minikube start
+kubectl apply -f k8s/manifests/namespace.yaml
+kubectl apply -R -f k8s/manifests/
+curl $(minikube ip):30792
+```
+Схема деплоя в любой другой кластер:
+```
+kubectl apply -f k8s/manifests/namespace.yaml
+kubectl apply -R -f k8s/manifests/
+```
 
 В продакшене с подобным приложением я бы еще сделал ConfigMap, а еще лучше полноценный Helm чарт, но на данный момент я считаю это overkill
