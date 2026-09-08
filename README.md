@@ -37,7 +37,7 @@ carxtest-job/
 **Nodejs** приложение, обернутое в **Docker**
 
 ### [Webapp-proxy](microservices/webapp-proxy/)
-**nginx**, слегка модифицирован конфиг
+**nginx**, слегка модифицирован конфиг, добавлен healthcheck endpoint `/healthz`
 
 Также собран простенький **CI** для ручного запуска сборки и пуша в `ghcr.io` *(v1.0.0 стабильная для обоих образов)*
 
@@ -54,6 +54,14 @@ carxtest-job/
 
 **webapp-proxy** сервис с типом NodePort *(в манифесте порт зафиксирован: 30792)*, сам он принимает трафик и отсылает его на сервис **webapp-svc**
 
+### Liveness и Readiness пробы
+
+Для **webapp-proxy** заданы liveness/readiness пробы через `/healthz`.
+
+Для **webapp** через корневой `/`.
+
+### Деплой
+
 Для локального запуска использовался minikube:
 ```
 minikube start
@@ -68,3 +76,6 @@ kubectl apply -R -f k8s/manifests/
 ```
 
 В продакшене с подобным приложением я бы еще сделал ConfigMap, а еще лучше полноценный Helm чарт, но на данный момент я считаю это overkill
+
+Requests/limits на контейнерах сознательно не выставлены.
+В проде я бы прогнал нагрузочный тест и выставил значения, основываясь на `kubectl top`.
