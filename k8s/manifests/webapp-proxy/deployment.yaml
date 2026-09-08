@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-proxy
+  namespace: webapp-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-proxy
+  template:
+    metadata:
+      labels:
+        app: webapp-proxy
+    spec:
+      containers:
+      - image: ghcr.io/shiretomi/webapp-proxy:v1.0.0
+        name: webapp-proxy
+        ports:
+          - containerPort: 80
+        env:
+          - name: APP_SERVICE_HOST
+            value: webapp-svc.webapp-ns.svc.cluster.local
+          - name: APP_SERVICE_PORT
+            value: "3000"
