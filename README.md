@@ -27,6 +27,12 @@ carxtest-job/
 
 Для локального запуска пароль от vault.yml направил через почту в ответном письме
 
+Пример команды для локального запуска:
+```
+cd ansible
+ansible-playbook -i inventory/dev/hosts.yml playbook.yml --ask-vault-pass
+```
+
 ### Роли
 Для каждой роли собраны **molecule** тесты под **rocky9** и **ubuntu22** образы через **docker**, все роли могут быть использованы на *Ubuntu* и *RHEL-like* системах
 
